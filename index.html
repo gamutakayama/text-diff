@@ -373,13 +373,13 @@
         document
           .getElementById("clear-original")
           .addEventListener("click", () => {
-            diffEditor.getModel().original.setValue("");
+            diffEditor.getOriginalEditor().setValue("");
             diffEditor.getOriginalEditor().focus();
           });
         document
           .getElementById("clear-modified")
           .addEventListener("click", () => {
-            diffEditor.getModel().modified.setValue("");
+            diffEditor.getModifiedEditor().setValue("");
             diffEditor.getModifiedEditor().focus();
           });
 
@@ -404,14 +404,14 @@
         const save = debounce(() => {
           saveState({
             language: diffEditor.getModel().original.getLanguageId(),
-            originalValue: diffEditor.getModel().original.getValue(),
-            modifiedValue: diffEditor.getModel().modified.getValue(),
+            originalValue: diffEditor.getOriginalEditor().getValue(),
+            modifiedValue: diffEditor.getModifiedEditor().getValue(),
           });
         }, 233);
 
-        diffEditor.getOriginalEditor().onDidChangeModelLanguage(save);
         diffEditor.getOriginalEditor().onDidChangeModelContent(save);
         diffEditor.getModifiedEditor().onDidChangeModelContent(save);
+        diffEditor.getOriginalEditor().onDidChangeModelLanguage(save);
 
         window
           .matchMedia("(prefers-color-scheme: dark)")
