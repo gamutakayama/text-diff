@@ -361,11 +361,11 @@
 
         diffEditor.setModel({
           original: monaco.editor.createModel(
-            state.originalValue || "Hello",
+            state.originalValue ?? "Hello",
             state.language
           ),
           modified: monaco.editor.createModel(
-            state.modifiedValue || "Hi",
+            state.modifiedValue ?? "Hi",
             state.language
           ),
         });
