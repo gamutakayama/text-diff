@@ -16,9 +16,8 @@
         --button-fg-color: #ffffff;
         --button-icon-bg-hover-color: #b8b8b850;
         --select-bg-color: #ffffff;
-        --select-bg-image: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%222048%22%20height%3D%222048%22%20viewBox%3D%220%200%202048%202048%22%3E%3Cpath%20fill%3D%22%233b3b3b%22%20d%3D%22m1799%20349l242%20241l-1017%201017L7%20590l242-241l775%20775z%22%2F%3E%3C%2Fsvg%3E);
+        --select-bg-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjM2IzYjNiIiBkPSJNNy40MSA4LjU4TDEyIDEzLjE3bDQuNTktNC41OUwxOCAxMGwtNiA2bC02LTZ6Ii8+PC9zdmc+);
         --select-border-color: #cecece;
-        --select-fg-color: #3b3b3b;
         --editor-bg-color: #ffffff;
         --editor-border-color: #e5e5e5;
       }
@@ -34,9 +33,8 @@
           --button-fg-color: #ffffff;
           --button-icon-bg-hover-color: #ffffff1f;
           --select-bg-color: #313131;
-          --select-bg-image: url(data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%222048%22%20height%3D%222048%22%20viewBox%3D%220%200%202048%202048%22%3E%3Cpath%20fill%3D%22%23cccccc%22%20d%3D%22m1799%20349l242%20241l-1017%201017L7%20590l242-241l775%20775z%22%2F%3E%3C%2Fsvg%3E);
+          --select-bg-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSIjY2NjY2NjIiBkPSJNNy40MSA4LjU4TDEyIDEzLjE3bDQuNTktNC41OUwxOCAxMGwtNiA2bC02LTZ6Ii8+PC9zdmc+);
           --select-border-color: #3c3c3c;
-          --select-fg-color: #cccccc;
           --editor-bg-color: #1f1f1f;
           --editor-border-color: #2b2b2b;
         }
@@ -46,9 +44,12 @@
         box-sizing: border-box;
       }
 
-      html,
-      body {
+      html {
         height: 100%;
+        text-size-adjust: 100%;
+        -moz-text-size-adjust: 100%;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-text-size-adjust: 100%;
       }
 
       body {
@@ -56,6 +57,10 @@
         color: var(--fg-color);
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans",
           Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+        font-size: 14px;
+        font-weight: 400;
+        height: 100%;
+        line-height: 1.5;
         margin: 0;
         padding: 32px 16px 24px;
       }
@@ -63,26 +68,31 @@
       .menu {
         align-items: center;
         display: flex;
-        justify-content: space-between;
+        gap: 8px;
         left: 16px;
         position: absolute;
         right: 16px;
-        top: 4px;
+        top: 5px;
       }
 
-      .button {
+      button {
         background-color: var(--primary-color);
         border: 1px solid var(--button-border-color);
         border-radius: 2px;
         color: var(--button-fg-color);
         cursor: pointer;
         font-family: inherit;
-        font-size: 14px;
-        line-height: 22px;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+        margin: 0;
+        outline: 2px solid transparent;
+        outline-offset: 1px;
         padding: 0 6px;
+        transition: all 233ms ease;
       }
 
-      .button:hover {
+      button:hover {
         background-color: var(--button-bg-hover-color);
       }
 
@@ -90,37 +100,41 @@
         appearance: none;
         background-color: var(--select-bg-color);
         background-image: var(--select-bg-image);
-        background-position: right 6px center;
+        background-position: right center;
         background-repeat: no-repeat;
-        background-size: 10px 10px;
         border: 1px solid var(--select-border-color);
         border-radius: 2px;
-        color: var(--select-fg-color);
+        color: inherit;
         cursor: pointer;
         font-family: inherit;
-        font-size: 14px;
-        line-height: 22px;
-        min-width: 222px;
-        padding: 0 22px 0 6px;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+        max-width: 240px;
+        min-width: 80px;
+        outline: 2px solid transparent;
+        outline-offset: 1px;
+        overflow: hidden;
+        padding: 0 20px 0 6px;
+        text-overflow: ellipsis;
+        transition: all 233ms ease;
         -moz-appearance: none;
         -webkit-appearance: none;
       }
 
-      .button:focus,
+      button:focus,
       select:focus {
-        outline: 2px solid var(--primary-color);
-        outline-offset: 1px;
+        outline-color: var(--primary-color);
       }
 
-      .button:focus:not(:focus-visible),
+      button:focus:not(:focus-visible),
       select:focus:not(:focus-visible) {
-        outline: none;
+        outline-color: transparent;
       }
 
-      .button:focus-visible,
+      button:focus-visible,
       select:focus-visible {
-        outline: 2px solid var(--primary-color);
-        outline-offset: 1px;
+        outline-color: var(--primary-color);
       }
 
       #container {
@@ -144,38 +158,19 @@
       .button-icon {
         background-color: transparent;
         border: none;
-        border-radius: 2px;
         color: var(--fg-color);
-        cursor: pointer;
-        line-height: 22px;
+        font-size: 20px;
+        outline-offset: 0;
         padding: 0;
+        visibility: hidden;
       }
 
       .button-icon > svg {
         display: block;
-        height: 20px;
-        width: 20px;
       }
 
       .button-icon:hover {
         background-color: var(--button-icon-bg-hover-color);
-      }
-
-      .button-icon:focus {
-        outline: 2px solid var(--primary-color);
-      }
-
-      .button-icon:focus:not(:focus-visible) {
-        outline: none;
-      }
-
-      .button-icon:focus-visible {
-        outline: 2px solid var(--primary-color);
-      }
-
-      #differences {
-        font-size: 14px;
-        line-height: 20px;
       }
 
       #loader {
@@ -212,35 +207,27 @@
   </head>
   <body>
     <div class="menu">
-      <button class="button" id="clear-original">Clear</button>
+      <button id="new">New</button>
+      <label for="ids">ID:</label>
+      <select id="ids"></select>
+      <label for="languages">Language:</label>
       <select id="languages"></select>
-      <button class="button" id="clear-modified">Clear</button>
     </div>
     <div id="container"></div>
     <div class="menu-bottom">
-      <button class="button-icon" id="diff-prev" style="visibility: hidden">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-        >
+      <button class="button-icon" id="diff-prev" aria-label="Previous">
+        <svg width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true">
           <path
-            fill="currentColor"
             d="M13 20h-2V8l-5.5 5.5l-1.42-1.42L12 4.16l7.92 7.92l-1.42 1.42L13 8z"
+            fill="currentColor"
           />
         </svg>
       </button>
-      <button class="button-icon" id="diff-next" style="visibility: hidden">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-        >
+      <button class="button-icon" id="diff-next" aria-label="Next">
+        <svg width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true">
           <path
-            fill="currentColor"
             d="M11 4h2v12l5.5-5.5l1.42 1.42L12 19.84l-7.92-7.92L5.5 10.5L11 16z"
+            fill="currentColor"
           />
         </svg>
       </button>
@@ -250,9 +237,21 @@
       <div class="loader"></div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.2/min/vs/loader.min.js"></script>
-    <script>
+    <script type="module">
       const params = new URLSearchParams(window.location.search);
       const id = params.get("id") || "0";
+
+      document.getElementById("new").addEventListener("click", () => {
+        const name = prompt("Please enter a id.");
+        if (name != null) {
+          window.location.href = `?id=${name || "0"}`;
+        }
+      });
+
+      const idsElement = document.getElementById("ids");
+      const languagesElement = document.getElementById("languages");
+
+      let saving = false;
 
       const debounce = (callback, wait) => {
         let timeoutId;
@@ -284,7 +283,7 @@
         return dbPromise;
       };
 
-      const loadState = async () => {
+      const getState = async () => {
         const db = await getDB();
 
         return new Promise((resolve) => {
@@ -295,16 +294,67 @@
         });
       };
 
-      const saveState = async (state) => {
+      const putState = async (state) => {
         const db = await getDB();
 
-        const transaction = db.transaction(DB_STORE_NAME, "readwrite");
-        transaction.objectStore(DB_STORE_NAME).put({ id, ...state });
+        return new Promise((resolve) => {
+          const transaction = db.transaction(DB_STORE_NAME, "readwrite");
+          const request = transaction
+            .objectStore(DB_STORE_NAME)
+            .put({ id, ...state });
+          request.onsuccess = () => {
+            saving = false;
+            resolve();
+          };
+          request.onerror = () => resolve();
+        });
       };
 
+      const appendIDsOptions = async () => {
+        const db = await getDB();
+
+        return new Promise((resolve) => {
+          const transaction = db.transaction(DB_STORE_NAME, "readonly");
+          const request = transaction
+            .objectStore(DB_STORE_NAME)
+            .openKeyCursor();
+          request.onsuccess = (event) => {
+            const cursor = event.target.result;
+            if (cursor) {
+              const option = new Option(cursor.key, cursor.key);
+              option.selected = cursor.key === id;
+
+              idsElement.appendChild(option);
+
+              cursor.continue();
+            } else {
+              const current = [...idsElement.options].find((option) => {
+                return option.value === id;
+              });
+              if (!current) {
+                const option = new Option(id, id);
+                option.selected = true;
+
+                idsElement.appendChild(option);
+              }
+
+              resolve();
+            }
+          };
+          request.onerror = () => resolve();
+        });
+      };
+
+      await appendIDsOptions();
+      idsElement.addEventListener("change", (event) => {
+        window.location.href = `?id=${event.target.value}`;
+      });
+
       window.addEventListener("beforeunload", (event) => {
-        event.preventDefault();
-        event.returnValue = true;
+        if (saving) {
+          event.preventDefault();
+          event.returnValue = true;
+        }
       });
 
       const getPreferredTheme = () => {
@@ -320,12 +370,11 @@
       });
 
       require(["vs/editor/editor.main"], async () => {
-        const state = await loadState();
+        const state = await getState();
 
         const languages = monaco.languages.getLanguages();
-        const languageIds = languages.map((language) => language.id);
 
-        if (!languageIds.includes(state.language)) {
+        if (!languages.map((lang) => lang.id).includes(state.language)) {
           state.language = "plaintext";
         }
 
@@ -333,26 +382,20 @@
           document.getElementById("container"),
           {
             automaticLayout: true,
-            enableSplitViewResizing: true,
             ignoreTrimWhitespace: false,
             originalEditable: true,
-            renderGutterMenu: false,
-            renderIndicators: false,
             tabSize: 2,
             theme: getPreferredTheme(),
             useInlineViewWhenSpaceIsLimited: false,
           }
         );
 
-        const languagesElement = document.getElementById("languages");
         languages.forEach((lang) => {
-          const option = document.createElement("option");
-          option.text = lang.aliases?.[0] || lang.id;
-          option.value = lang.id;
+          const option = new Option(lang.aliases?.[0] || lang.id, lang.id);
+          option.selected = option.value === state.language;
 
           languagesElement.appendChild(option);
         });
-        languagesElement.value = state.language;
         languagesElement.addEventListener("change", (event) => {
           const value = event.target.value;
           diffEditor.getModel().original.setLanguage(value);
@@ -361,27 +404,14 @@
 
         diffEditor.setModel({
           original: monaco.editor.createModel(
-            state.originalValue ?? "Hello",
+            state.originalValue,
             state.language
           ),
           modified: monaco.editor.createModel(
-            state.modifiedValue ?? "Hi",
+            state.modifiedValue,
             state.language
           ),
         });
-
-        document
-          .getElementById("clear-original")
-          .addEventListener("click", () => {
-            diffEditor.getOriginalEditor().setValue("");
-            diffEditor.getOriginalEditor().focus();
-          });
-        document
-          .getElementById("clear-modified")
-          .addEventListener("click", () => {
-            diffEditor.getModifiedEditor().setValue("");
-            diffEditor.getModifiedEditor().focus();
-          });
 
         const diffPrevButton = document.getElementById("diff-prev");
         const diffNextButton = document.getElementById("diff-next");
@@ -402,16 +432,21 @@
         });
 
         const save = debounce(() => {
-          saveState({
+          putState({
             language: diffEditor.getModel().original.getLanguageId(),
             originalValue: diffEditor.getOriginalEditor().getValue(),
             modifiedValue: diffEditor.getModifiedEditor().getValue(),
           });
         }, 233);
 
-        diffEditor.getOriginalEditor().onDidChangeModelContent(save);
-        diffEditor.getModifiedEditor().onDidChangeModelContent(save);
-        diffEditor.getOriginalEditor().onDidChangeModelLanguage(save);
+        const handleChanged = () => {
+          saving = true;
+          save();
+        };
+
+        diffEditor.getOriginalEditor().onDidChangeModelContent(handleChanged);
+        diffEditor.getModifiedEditor().onDidChangeModelContent(handleChanged);
+        diffEditor.getOriginalEditor().onDidChangeModelLanguage(handleChanged);
 
         window
           .matchMedia("(prefers-color-scheme: dark)")
