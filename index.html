@@ -62,7 +62,7 @@
         height: 100%;
         line-height: 1.5;
         margin: 0;
-        padding: 32px 16px 24px;
+        padding: 32px 16px;
       }
 
       .menu {
@@ -148,11 +148,16 @@
         align-items: center;
         display: flex;
         gap: 8px;
-        justify-content: end;
+        justify-content: space-between;
         left: 16px;
         position: absolute;
         right: 16px;
-        bottom: 2px;
+        bottom: 5px;
+      }
+
+      .menu-bottom > div {
+        display: flex;
+        gap: 8px;
       }
 
       .button-icon {
@@ -207,7 +212,6 @@
   </head>
   <body>
     <div class="menu">
-      <button id="new">New</button>
       <label for="ids">ID:</label>
       <select id="ids"></select>
       <label for="languages">Language:</label>
@@ -215,23 +219,30 @@
     </div>
     <div id="container"></div>
     <div class="menu-bottom">
-      <button class="button-icon" id="diff-prev" aria-label="Previous">
-        <svg width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true">
-          <path
-            d="M13 20h-2V8l-5.5 5.5l-1.42-1.42L12 4.16l7.92 7.92l-1.42 1.42L13 8z"
-            fill="currentColor"
-          />
-        </svg>
-      </button>
-      <button class="button-icon" id="diff-next" aria-label="Next">
-        <svg width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true">
-          <path
-            d="M11 4h2v12l5.5-5.5l1.42 1.42L12 19.84l-7.92-7.92L5.5 10.5L11 16z"
-            fill="currentColor"
-          />
-        </svg>
-      </button>
-      <div id="differences"></div>
+      <div>
+        <button id="new">New</button>
+        <button id="delete">Delete</button>
+        <button id="clear">Clear</button>
+      </div>
+      <div>
+        <button class="button-icon" id="diff-prev" aria-label="Previous">
+          <svg width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M13 20h-2V8l-5.5 5.5l-1.42-1.42L12 4.16l7.92 7.92l-1.42 1.42L13 8z"
+              fill="currentColor"
+            />
+          </svg>
+        </button>
+        <button class="button-icon" id="diff-next" aria-label="Next">
+          <svg width="1em" height="1em" viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M11 4h2v12l5.5-5.5l1.42 1.42L12 19.84l-7.92-7.92L5.5 10.5L11 16z"
+              fill="currentColor"
+            />
+          </svg>
+        </button>
+        <div id="differences"></div>
+      </div>
     </div>
     <div id="loader">
       <div class="loader"></div>
@@ -241,15 +252,21 @@
       const params = new URLSearchParams(window.location.search);
       const id = params.get("id") || "0";
 
+      const idsElement = document.getElementById("ids");
+      const languagesElement = document.getElementById("languages");
+
       document.getElementById("new").addEventListener("click", () => {
         const name = prompt("Please enter a id.");
         if (name != null) {
           window.location.href = `?id=${name || "0"}`;
         }
       });
-
-      const idsElement = document.getElementById("ids");
-      const languagesElement = document.getElementById("languages");
+      document.getElementById("delete").addEventListener("click", async () => {
+        if (confirm("Do you really want to delete?")) {
+          await deleteState();
+          window.location.href = "/";
+        }
+      });
 
       let saving = false;
 
@@ -306,6 +323,17 @@
             saving = false;
             resolve();
           };
+          request.onerror = () => resolve();
+        });
+      };
+
+      const deleteState = async () => {
+        const db = await getDB();
+
+        return new Promise((resolve) => {
+          const transaction = db.transaction(DB_STORE_NAME, "readwrite");
+          const request = transaction.objectStore(DB_STORE_NAME).delete(id);
+          request.onsuccess = () => resolve();
           request.onerror = () => resolve();
         });
       };
@@ -414,6 +442,12 @@
         });
 
         diffEditor.getOriginalEditor().focus();
+
+        document.getElementById("clear").addEventListener("click", () => {
+          diffEditor.getOriginalEditor().setValue("");
+          diffEditor.getOriginalEditor().focus();
+          diffEditor.getModifiedEditor().setValue("");
+        });
 
         const diffPrevButton = document.getElementById("diff-prev");
         const diffNextButton = document.getElementById("diff-next");
